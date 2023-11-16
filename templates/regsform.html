@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking App Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-image: url({% static 'img/light.jpg' %});
+            background-size: cover;
+            background-position: center;
+        }
+
+        .navbar {
+            background-color: ; /* Updated to a shade of blue */
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: white;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            margin: auto;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #06BBCC;
+        }
+
+        label {
+            color: #333;
+        }
+
+        .btn-primary {
+            background-color: #06BBCC;
+            border: none;
+        }
+        .navbar-nav .nav-link {
+        color: black;
+        font-size: 18px; /* Adjust the size as needed */
+    }
+        .btn-primary:hover {
+            background-color: #056b80;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top">
+        <a class="navbar-brand" href="{% url 'ebankapp:index' %}">E-Banking<span class="text-primary">.</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ebankapp:index' %}">Home</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <span class="nav-link">{{user.username}}</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'credentials:logout' %}">Logout</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="site-section" data-aos="fade">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="section-title mb-3">E-Banking Form</h2>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <form method="post" class="p-5 bg-white">
+                        {% csrf_token %}
+                                                    <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                     {{ form.name.errors }}
+                            <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}: </label>
+                            <input name="{{ form.name.html_name }}" type="text" class="form-control" placeholder="Enter your Name" id="{{ form.name.id_for_label }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.dob.errors }}
+                                    <label for="{{ form.dob.id_for_label }}">Date of Birth:</label>
+                                    <input name="{{ form.dob.html_name }}" type="text" class="form-control" placeholder="Enter your D.O.B" id="{{ form.dob.id_for_label }}" required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    {{ form.age.errors }}
+                                    <label for="{{ form.age.id_for_label }}">Age:</label>
+                                    <input type="number" id="{{ form.age.id_for_label }}" placeholder="Enter your age" name="{{ form.age.html_name }}" class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.gender.errors }}
+                                <label for="{{ form.gender.id_for_label }}">Gender:</label><br>
+                                    <label><input type="radio"  name="{{ form.gender.html_name }}" value="male"  required>Male</label>
+                                   <label><input type="radio"  name="{{ form.gender.html_name }}" value="female"  required>Female</label>
+                                    <label><input type="radio"  name="{{ form.gender.html_name }}" value="other"  required>Other</label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    {{ form.mob_no.errors }}
+                                    <label class="text-black" for="{{ form.mob_no.id_for_label }}">Mob No:</label>
+                                    <input type="text" id="{{ form.mob_no.id_for_label }}" name="{{ form.mob_no.html_name }}" placeholder="Enter your Mobile No." class="form-control" required>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ form.mail_id.errors }}
+                                <label class="text-black" for="{{ form.mail_id.id_for_label }}">Email:</label>
+                                <input type="email" id="{{ form.mail_id.id_for_label }}" name="{{ form.mail_id.html_name }}" placeholder="Enter your email Id" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label class="text-black" for="{{ form.address.id_for_label }}">Address:</label>
+                                    <textarea name="{{ form.address.html_name }}" id="{{ form.address.id_for_label }}" cols="15" rows="5" class="form-control" placeholder="Write your Address here..."></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3 ">
+                                    {{ form.district.errors }}
+                                    <label class="text-black" >{{ form.district.label_tag }}</label>
+                                    <select class="form-control" name="district" id="id_district">
+                                        <option value="" selected>Select District</option>
+                                        {% for district in form.district.field.choices %}
+                                        <option value="{{ district.0 }}">{{ district.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                <label class="text-black" >{{ form.branch.label_tag }}</label>
+                                    <select class="form-control" name="branch" id="id_branch" >
+                                        <option value="" selected>Select Branch</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <label class="text-black" >{{ form.account_type.label_tag }}</label>
+                            {{ form.account_type }}
+                            <br>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label class="text-black" >Materials Required:</label>
+
+                                    <label class="text-black" >{{ form.credit_card.label_tag }}</label> {{ form.credit_card }}
+                                    {{ form.debit_card.errors }}
+                                    <label class="text-black" >{{ form.debit_card.label_tag }}</label> {{ form.debit_card }}
+                                    {{ form.check_book.errors }}
+                                    <label class="text-black" >{{ form.check_book.label_tag }}</label> {{ form.check_book }}
+                                </div>
+                             </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="SUBMIT" class="btn btn-primary btn-md text-white">
+                        </div>
+
+                        {% if message %}
+                        <label class="text-black">{{ message }}: </label><br>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+document.getElementById('id_district').addEventListener('change', function() {
+    var districtSelect = document.getElementById('id_district');
+    var branchSelect = document.getElementById('id_branch');
+
+    if (districtSelect.value === '') {
+        branchSelect.disabled = true;
+        branchSelect.value = '';
+    } else {
+        branchSelect.disabled = false;
+   }
+});
+</script>
+
+    <script>
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+
+
+
+
+
+
+        let district_field = document.getElementById("id_district")
+        let branch_field = document.getElementById("id_branch")
+
+        district_field.addEventListener("change", pickState)
+        function pickState(e){
+            district_id = e.target.value
+            const data = { user_id: district_id}
+            let url = " {% url 'ebankapp:branch' %} "
+
+fetch(url, {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': csrftoken
+  },
+  body: JSON.stringify(data),
+})
+.then(response => response.json())
+.then(data => {
+  console.log('Success:', data[0]['name']);
+
+
+  for(let i = 0; i<data.length; i++){
+      branch_field.innerHTML += `<option value = "${data[i]["id"]}" selescted>${data[i]["name"]}</option>`
+
+  }
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+
+        }
+
+
+
+
+
+
+        let input = document.getElementById("id_name")
+        let select = document.getElementsByTagName("select")
+        console.log(select)
+
+        input.classList.add("form-control")
+
+        for(let i = 0; i <select.length; i++){
+            select[i].classList.add("form-select")
+        }
+    </script>
+</body>
+
+</html>
